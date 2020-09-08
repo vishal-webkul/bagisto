@@ -51,7 +51,7 @@ class ProductDataGrid extends DataGrid
         }
 
         if ($this->locale === 'all') {
-            $whereInLocales = Locale::query()->pluck('code')->toArray();
+            $whereInLocales = [core()->getDefaultChannel()->default_locale->code];
         } else {
             $whereInLocales = [$this->locale];
         }
@@ -78,7 +78,6 @@ class ProductDataGrid extends DataGrid
 
         $queryBuilder->whereIn('product_flat.locale', $whereInLocales);
         $queryBuilder->whereIn('product_flat.channel', $whereInChannels);
-        $queryBuilder->whereNotNull('product_flat.sku');
 
         $this->addFilter('product_id', 'product_flat.product_id');
         $this->addFilter('product_name', 'product_flat.name');
